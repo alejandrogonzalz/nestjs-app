@@ -1,8 +1,5 @@
-## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+# Installation
 
 ```bash
 $ npm install
@@ -103,3 +100,27 @@ Description: Deletes the task with the specified ID.
 # Path Parameter:
 
 id: The ID of the task to be deleted.
+
+# Create a User
+Endpoint: POST /api/users/create
+
+# Description: Creates a new user with the provided details.
+
+Request Body:
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "role": "MEMBER"
+}
+
+# Get All Users
+Endpoint: GET /api/users/getAllUsers
+
+Description: Retrieves all users with optional filtering options.
+
+# Query Parameters:
+
+- name: Filters users based on their name. (Optional)
+- email: Filters users based on their email. (Optional)
+- role: Filters users based on their role. (Optional)
+
