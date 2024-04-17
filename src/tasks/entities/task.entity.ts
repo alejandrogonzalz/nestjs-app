@@ -1,12 +1,6 @@
 import { User } from 'src/users/entities/user.entity';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { TaskStatus } from '../dto/task-status.enum';
 
 @Entity()
 export class Task {
@@ -25,16 +19,12 @@ export class Task {
   @Column({ type: 'timestamp' })
   deadline: Date;
 
-  @Column({ default: 'active' })
+  @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.ACTIVE })
   status: string;
-
-  @ManyToMany(() => User)
-  @JoinTable()
-  assignedUsers: User[];
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   cost: number;
 
-  @ManyToOne(() => User, (user) => user.tasks)
-  user: User;
+  @ManyToMany(() => User, (user) => user.tasks)
+  assignedUsers: User[];
 }

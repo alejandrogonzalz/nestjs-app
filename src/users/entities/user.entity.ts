@@ -1,5 +1,12 @@
 import { Task } from 'src/tasks/entities/task.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
+import { UserRole } from '../dto/user-role.enum';
 
 @Entity()
 export class User {
@@ -10,11 +17,12 @@ export class User {
   name: string;
 
   @Column()
+  @Unique(['email'])
   email: string;
 
-  @Column({ default: 'member' })
-  role: string;
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.MEMBER })
+  role: UserRole;
 
-  @OneToMany(() => Task, (task) => task.user)
+  @ManyToMany(() => Task, (task) => task.assignedUsers)
   tasks: Task[];
 }
