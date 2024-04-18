@@ -1,14 +1,12 @@
-## Description
+# Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+# Installation
 
 ```bash
 $ npm install
 ```
-
-## Additional Information
 
 # Setting up PostgreSQL Database
 
@@ -53,15 +51,14 @@ Description: Creates a new task with the provided details.
 
 # Request Body:
 
-`````json
 {
-    "title": "Task Title",
-    "description": "Task Description",
-    "estimationHours": 5,
-    "deadline": "2024-04-30T12:00:00.000Z",
-    "status": "ACTIVE",
-    "usersId": [1, 2, 3],
-    "cost": 100
+"title": "Task Title",
+"description": "Task Description",
+"estimationHours": 5,
+"deadline": "2024-04-30T12:00:00.000Z",
+"status": "ACTIVE",
+"usersId": [1, 2, 3],
+"cost": 100
 }
 
 # Get All Tasks
@@ -88,15 +85,14 @@ Description: Updates an existing task with the specified ID.
 id: The ID of the task to be updated.
 Request Body:
 
-````json
 {
-    "title": "Updated Task Title",
-    "description": "Updated Task Description",
-    "estimationHours": 8,
-    "deadline": "2024-05-10T12:00:00.000Z",
-    "status": "IN_PROGRESS",
-    "usersId": [1, 2],
-    "cost": 150
+"title": "Updated Task Title",
+"description": "Updated Task Description",
+"estimationHours": 8,
+"deadline": "2024-05-10T12:00:00.000Z",
+"status": "IN_PROGRESS",
+"usersId": [1, 2],
+"cost": 150
 }
 
 # Delete a Task
@@ -129,24 +125,22 @@ Type: JSON array of objects
 
 Example Response:
 
-```json
 [
-  {
-    "name": "John Doe",
-    "email": "john@example.com",
-    "completionRatio": 0.75,
-    "completedTasks": 15,
-    "totalTasks": 20
-  },
-  {
-    "name": "Jane Smith",
-    "email": "jane@example.com",
-    "completionRatio": 0.5,
-    "completedTasks": 10,
-    "totalTasks": 20
-  }
+{
+"name": "John Doe",
+"email": "john@example.com",
+"completionRatio": 0.75,
+"completedTasks": 15,
+"totalTasks": 20
+},
+{
+"name": "Jane Smith",
+"email": "jane@example.com",
+"completionRatio": 0.5,
+"completedTasks": 10,
+"totalTasks": 20
+}
 ]
-`````
 
 # Get Task Status Time Statistics
 
@@ -165,16 +159,14 @@ Type: JSON array of objects
 
 Example Response:
 
-```json
 [
-  {
-    "status": "ACTIVE",
-    "averageTimeSpent": 6.5
-  },
-  {
-    "status": "FINISHED",
-    "averageTimeSpent": 8.0
-  }
-  // Other statuses...
+{
+"status": "ACTIVE",
+"averageTimeSpent": 6.5
+},
+{
+"status": "FINISHED",
+"averageTimeSpent": 8.0
+}
+// Other statuses...
 ]
-```
