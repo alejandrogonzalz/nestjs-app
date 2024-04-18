@@ -11,6 +11,7 @@ import { In, Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskAssignment } from './entities/task-assignment.entity';
+import { TaskStatusTimeStatisticsDTO } from './entities/task-status-statistic.dto';
 import { Task } from './entities/task.entity';
 
 @Injectable()
@@ -98,7 +99,7 @@ export class TasksService {
 
     if (userId) {
       query = query
-        .leftJoin(TaskAssignment, 'assignment', 'task.id = assignment.userId')
+        .leftJoin(TaskAssignment, 'assignment', 'task.id = assignment.taskId')
         .andWhere('assignment.userId = :userId', { userId });
     }
 
@@ -132,5 +133,21 @@ export class TasksService {
     }
     await this.tasksRepository.delete(task);
     return { message: 'Task deleted successfully', deletedTask: task };
+  }
+
+  async getTaskStatusTimeStatistics(): Promise<TaskStatusTimeStatisticsDTO[]> {
+    const taskStatusTimeStatistics = await this.tasksRepository
+      .createQueryBuilder('task')
+      .select('task.status as status')
+      .addSelect('AVG(task.estimationHours) as averageTimeSpent')
+      .groupBy('task.status')
+      .getRawMany();
+
+    console.log(taskStatusTimeStatistics);
+
+    return taskStatusTimeStatistics.map(({ status, averagetimespent }) => ({
+      status,
+      averageTimeSpent: averagetimespent ? parseFloat(averagetimespent) : 0,
+    }));
   }
 }

@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Eduardo Adrian\",\r\n  \"email\": \"lalox_00@gmail.com\",\r\n  \"role\": \"member\"\r\n}\r\n",
+					"raw": "{\r\n  \"name\": \"Luis Angelk Gonzalez Almazan\",\r\n  \"email\": \"luis.aga@gmail.com\",\r\n  \"role\": \"admin\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -43,7 +43,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"title\": \"Second Task\",\r\n  \"description\": \"Nothing to describe\",\r\n  \"estimationHours\": 8,\r\n  \"deadline\": \"17-08-2025\",\r\n  \"status\": \"finished\",\r\n  \"usersId\": [1],\r\n  \"cost\": 300\r\n}\r\n",
+					"raw": "{\r\n  \"title\": \"Fifth Task\",\r\n  \"description\": \"This is a test\",\r\n  \"estimationHours\": 8,\r\n  \"deadline\": \"18-04-2024\",\r\n  \"status\": \"finished\",\r\n  \"usersId\": [42, 40, 41],\r\n  \"cost\": 100\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -89,7 +89,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8000/api/users/getAllUsers?role=member",
+					"raw": "localhost:8000/api/users/getAllUsers",
 					"host": [
 						"localhost"
 					],
@@ -98,12 +98,6 @@
 						"api",
 						"users",
 						"getAllUsers"
-					],
-					"query": [
-						{
-							"key": "role",
-							"value": "member"
-						}
 					]
 				}
 			},
@@ -133,7 +127,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8000/api/tasks/getAllTasks",
+					"raw": "localhost:8000/api/tasks/getAllTasks?userId=40",
 					"host": [
 						"localhost"
 					],
@@ -142,6 +136,88 @@
 						"api",
 						"tasks",
 						"getAllTasks"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "40"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllTaskCompletionUsersRatio",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/api/users/getTaskCompletionUserRatio",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						"getTaskCompletionUserRatio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllTaskCompletionUsersRatio Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/api/tasks/getTaskStatusTimeStatistics",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"tasks",
+						"getTaskStatusTimeStatistics"
 					]
 				}
 			},
@@ -160,7 +236,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"title\": \"Updated Task Title\",\r\n  \"description\": \"Updated Task Description\",\r\n  \"deadline\": \"2024-04-30\",\r\n  \"status\": \"active\"\r\n}\r\n",
+					"raw": "{\r\n  \"title\": \"Who is it here?\",\r\n  \"description\": \"Updated Task Description\",\r\n  \"deadline\": \"2023-04-30\",\r\n  \"status\": \"finished\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -168,7 +244,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8000/api/tasks/updateTask/3",
+					"raw": "localhost:8000/api/tasks/updateTask/13",
 					"host": [
 						"localhost"
 					],
@@ -177,7 +253,7 @@
 						"api",
 						"tasks",
 						"updateTask",
-						"3"
+						"13"
 					]
 				}
 			},

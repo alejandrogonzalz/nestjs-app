@@ -12,6 +12,7 @@ import {
 import { HttpExceptionFilter } from 'src/filters/http-exception-filters';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { TaskStatusTimeStatisticsDTO } from './entities/task-status-statistic.dto';
 import { Task } from './entities/task.entity';
 import { TasksService } from './tasks.service';
 
@@ -49,5 +50,10 @@ export class TasksController {
   @Delete('deleteTask/:id')
   delete(@Param('id') id: number) {
     return this.tasksService.delete(id);
+  }
+
+  @Get('getTaskStatusTimeStatistics')
+  async getTaskStatusTimeStatistics(): Promise<TaskStatusTimeStatisticsDTO[]> {
+    return this.tasksService.getTaskStatusTimeStatistics();
   }
 }

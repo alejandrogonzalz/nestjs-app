@@ -43,7 +43,7 @@ In the scripts folder, you will also find a NestJS Postman collection with the e
 - updateTask (PATCH)
 - deleteTask (DELETE)
 
-## Enpoints
+# Enpoints
 
 # Create a Task
 
@@ -53,14 +53,15 @@ Description: Creates a new task with the provided details.
 
 # Request Body:
 
+`````json
 {
-"title": "Task Title",
-"description": "Task Description",
-"estimationHours": 5,
-"deadline": "2024-04-30T12:00:00.000Z",
-"status": "ACTIVE",
-"usersId": [1, 2, 3],
-"cost": 100
+    "title": "Task Title",
+    "description": "Task Description",
+    "estimationHours": 5,
+    "deadline": "2024-04-30T12:00:00.000Z",
+    "status": "ACTIVE",
+    "usersId": [1, 2, 3],
+    "cost": 100
 }
 
 # Get All Tasks
@@ -86,14 +87,16 @@ Description: Updates an existing task with the specified ID.
 
 id: The ID of the task to be updated.
 Request Body:
+
+````json
 {
-"title": "Updated Task Title",
-"description": "Updated Task Description",
-"estimationHours": 8,
-"deadline": "2024-05-10T12:00:00.000Z",
-"status": "IN_PROGRESS",
-"usersId": [1, 2],
-"cost": 150
+    "title": "Updated Task Title",
+    "description": "Updated Task Description",
+    "estimationHours": 8,
+    "deadline": "2024-05-10T12:00:00.000Z",
+    "status": "IN_PROGRESS",
+    "usersId": [1, 2],
+    "cost": 150
 }
 
 # Delete a Task
@@ -105,3 +108,73 @@ Description: Deletes the task with the specified ID.
 # Path Parameter:
 
 id: The ID of the task to be deleted.
+
+# Get Task Completion Users Ratio
+
+Endpoint: GET /api/task-completion/getTaskCompletionUserRatio
+
+Description: Retrieves the completion ratio and task statistics for each user.
+
+## Response
+
+Type: JSON array of objects
+
+### Fields
+
+- name (string, required): The name of the user.
+- email (string, required): The email address of the user.
+- completionRatio (number, required): The ratio of completed tasks to total tasks for the user.
+- completedTasks (number, required): The number of completed tasks for the user.
+- totalTasks (number, required): The total number of tasks assigned to the user.
+
+Example Response:
+
+```json
+[
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "completionRatio": 0.75,
+    "completedTasks": 15,
+    "totalTasks": 20
+  },
+  {
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "completionRatio": 0.5,
+    "completedTasks": 10,
+    "totalTasks": 20
+  }
+]
+`````
+
+# Get Task Status Time Statistics
+
+Endpoint: GET /api/tasks/getTaskStatusTimeStatistics
+
+Description: Retrieves the average time spent on tasks based on their status.
+
+## Response
+
+Type: JSON array of objects
+
+### Fields
+
+- status (string, required): The status of the tasks.
+- averageTimeSpent (number, required): The average time spent on tasks in hours.
+
+Example Response:
+
+```json
+[
+  {
+    "status": "ACTIVE",
+    "averageTimeSpent": 6.5
+  },
+  {
+    "status": "FINISHED",
+    "averageTimeSpent": 8.0
+  }
+  // Other statuses...
+]
+```

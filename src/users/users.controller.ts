@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, Query, UseFilters } from '@nestjs/common';
 import { HttpExceptionFilter } from 'src/filters/http-exception-filters';
 import { CreateUserDto } from './dto/create-user.dto';
+import { TaskCompletionUserDTO } from './dto/task-completion-users.dto';
 import { UserRole } from './dto/user-role.enum';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -23,5 +24,10 @@ export class UsersController {
     @Query('role') role?: UserRole,
   ): Promise<User[]> {
     return this.usersService.findAllUsers(name, email, role);
+  }
+
+  @Get('getTaskCompletionUserRatio')
+  getAllTaskCompletionUserRatio(): Promise<TaskCompletionUserDTO[]> {
+    return this.usersService.getTaskCompletionUsersStatistics();
   }
 }

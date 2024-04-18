@@ -1,8 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TaskStatus } from 'src/tasks/dto/task-status.enum';
 import { TaskAssignment } from 'src/tasks/entities/task-assignment.entity';
+import { Task } from 'src/tasks/entities/task.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import {
+  TaskCompletionUser,
+  TaskCompletionUserDTO,
+} from './dto/task-completion-users.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -12,6 +18,8 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
     @InjectRepository(TaskAssignment)
     private readonly taskAssignmentRepository: Repository<TaskAssignment>,
+    @InjectRepository(Task)
+    private readonly tasksRepository: Repository<Task>,
   ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -43,10 +51,55 @@ export class UsersService {
     );
     query = query.leftJoin('assignment.task', 'task');
     query = query.addSelect('user.id', 'userId');
-    query = query.addSelect('COUNT(task.id)', 'taskCount');
+    query = query.addSelect('COUNT(assignment.userId)', 'taskCount');
     query = query.addSelect('SUM(task.cost)', 'totalTaskCost');
 
     query = query.groupBy('user.id');
     return await query.getRawMany();
+  }
+
+  async getTaskCompletionUsersStatistics(): Promise<TaskCompletionUserDTO[]> {
+    const taskAssignments = await this.taskAssignmentRepository.find({
+      relations: ['user', 'task'],
+    });
+    const taskCompletionUsers: TaskCompletionUser[] = [];
+
+    for (const taskAssignment of taskAssignments) {
+      let existingUser = taskCompletionUsers.find(
+        (user) => user.email === taskAssignment.user.email,
+      );
+      if (!existingUser) {
+        existingUser = new TaskCompletionUser(
+          taskAssignment.user.name,
+          taskAssignment.user.email,
+          taskAssignment.user.role,
+        );
+        taskCompletionUsers.push(existingUser);
+      }
+
+      // Increment totalTasks count for the user
+      existingUser.incrementTotalTasks();
+
+      // Increment task completion if the task is finished
+      if (taskAssignment.task.status === TaskStatus.FINISHED) {
+        existingUser.incrementTaskCompletion();
+      }
+    }
+
+    taskCompletionUsers.forEach((user) => {
+      user.calculateCompletionRatio();
+    });
+
+    const usersDTO: TaskCompletionUserDTO[] = taskCompletionUsers.map(
+      (user) => ({
+        name: user.name,
+        email: user.email,
+        completionRatio: user.completionRatio,
+        completedTasks: user.taskCompletion,
+        totalTasks: user.totalTasks,
+      }),
+    );
+
+    return usersDTO;
   }
 }
